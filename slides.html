@@ -379,6 +379,88 @@ def mycopy(source, dest):
 
 ---
 
+layout: true
+
+# Feature 5: Everything is an iterator
+
+---
+
+- This is the hardest one to sell.
+
+- Iterators exist in Python 2 as well.
+
+- But you have to use them. Don't write `range` or `zip` or `dict.values` or
+  ....
+
+---
+
+- If you do...
+
+--
+
+```py
+def naivesum(N):
+    """
+    Naively sum the first N integers
+    """
+    A = 0
+    for i in range(N + 1):
+        A += i
+    return A
+```
+--
+
+```py
+In [3]: timeit naivesum(1000000)
+10 loops, best of 3: 61.4 ms per loop
+```
+
+--
+
+```py
+In [4]: timeit naivesum(10000000)
+1 loops, best of 3: 622 ms per loop
+```
+
+--
+
+```py
+In [5]: timeit naivesum(100000000)
+```
+
+--
+
+<img src="startupdisk.png" width="500">
+
+---
+
+![](badtime.jpg)
+
+---
+
+- Instead write some variant (`xrange`, `itertools.izip`,
+  `dict.itervalues`, ...).
+
+- Inconsistant API anyone?
+
+---
+
+- In Python 3, `range`, `zip`, `map`, `dict.values`, etc. are all iterators.
+
+- If you want a list, just wrap the result with `list`.
+
+- Explicit is better than implicit.
+
+- Harder to write code that accidentally uses too much memory, because the
+  input was bigger than you expected.
+
+---
+
+layout: true
+
+# Feature 6:
+
+
     </textarea>
     <script src="http://gnab.github.io/remark/downloads/remark-0.6.2.min.js" type="text/javascript">
     </script>
