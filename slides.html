@@ -506,6 +506,51 @@ layout: true
 
 layout: true
 
+# Feature 10: Fun
+
+---
+
+## Unicode variable names
+
+```py
+>>> résumé = "knows Python"
+>>> π = math.pi
+```
+
+- Sorry, letter-like characters only.
+
+- `🍺 = "beer"` does not work.
+
+--
+
+## Function annotations
+
+```py
+def f(a: stuff, b: stuff = 2) -> result:
+    ...
+```
+
+- Python doesn't do anything with the annotations other than put them in an
+  `__annotations__` dictionary.
+
+  ```py
+  >>> def f(x: int) -> float:
+  ...     pass
+  ...
+  >>> f.__annotations__
+  {'return': <class 'float'>, 'x': <class 'int'>}
+  ```
+
+- But it leaves open the possiblity for library authors to do fun things.
+
+- Example, IPython 2.0 widgets.
+
+- Run IPython notebook (in Python 3) from IPython git checkout and open http://127.0.0.1:8888/notebooks/examples/Interactive%20Widgets/Image%20Processing.ipynb
+
+---
+
+layout: true
+
 # Feature 11: Unicode and bytes
 
 ---
