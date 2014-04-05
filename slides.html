@@ -458,7 +458,48 @@ In [5]: timeit naivesum(100000000)
 
 layout: true
 
-# Feature 6:
+# Feature 6: No more comparison of everything to everything
+
+---
+
+- In Python 2, you can do
+
+  ```py
+  >>> sorted(['1', 2, 3])
+  [2, 3, '1']
+  ```
+
+--
+
+- Hurray. I just disproved math!
+
+--
+
+- It's because in Python 2, you can `<` compare anything to anything.
+
+  ```py
+  >>> 'one' > 2 # One *is* the lonliest number
+  True
+  ```
+
+---
+
+- In Python 3, you can't do this:
+
+  ```py
+  >>> 'one' > 2
+  Traceback (most recent call last):
+    File "<stdin>", line 1, in <module>
+    TypeError: unorderable types: str() > int()
+  ```
+
+- This avoids subtle bugs, e.g., from not coercing all types from int to str
+  or visa versa.
+
+- Especially when you use `>` implicitly, like with `max` or `sorted`.
+
+---
+
 
 
     </textarea>
