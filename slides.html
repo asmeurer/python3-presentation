@@ -255,6 +255,79 @@ layout: true
 
 # Feature 3: Chained exceptions
 
+---
+
+**Situation:** you catch an exception with `except` do something, and then raise a
+different exception.
+
+```py
+def mycopy(source, dest):
+   try:
+       shutil.copy2(source, dest)
+   except OSError: # We don't have permissions. More on this later
+       raise NotImplementedError("automatic sudo injection")
+```
+
+**Problem:** You lose the original traceback
+
+```py
+>>> mycopy('noway', 'noway2')
+>>> mycopy(1, 2)
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+  File "<stdin>", line 5, in mycopy
+NotImplementedError: automatic sudo injection
+```
+
+--
+
+What happened with the `OSError`?
+
+---
+
+Python 3 shows you the whole chain of exceptions:
+
+
+```py
+mycopy('noway', 'noway2')
+Traceback (most recent call last):
+  File "<stdin>", line 3, in mycopy
+  File "/Users/aaronmeurer/anaconda3/lib/python3.3/shutil.py", line 243, in copy2
+    copyfile(src, dst, follow_symlinks=follow_symlinks)
+  File "/Users/aaronmeurer/anaconda3/lib/python3.3/shutil.py", line 109, in copyfile
+    with open(src, 'rb') as fsrc:
+PermissionError: [Errno 13] Permission denied: 'noway'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+  File "<stdin>", line 5, in mycopy
+NotImplementedError: automatic sudo injection
+```
+
+--
+
+You can also do this manually using `raise from`
+
+```py
+raise exception from e
+```
+
+--
+
+```py
+>>> raise NotImplementedError from OSError
+OSError
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+NotImplementedError
+```
+
+---
 
     </textarea>
     <script src="http://gnab.github.io/remark/downloads/remark-0.6.2.min.js" type="text/javascript">
