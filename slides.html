@@ -344,21 +344,25 @@ layout: true
 
 - You really have to do
 
-```py
-import errno
-def mycopy(source, dest):
-   try:
-       shutil.copy2(source, dest)
-   except (OSError, IOError) as e:
-       if e.errno in [errno.EPERM, errno.EACCES]:
-           raise NotImplementedError("automatic sudo injection")
-       else:
-           raise
-```
+  ```py
+  import errno
+  def mycopy(source, dest):
+     try:
+         shutil.copy2(source, dest)
+     except (OSError, IOError) as e:
+         if e.errno in [errno.EPERM, errno.EACCES]:
+             raise NotImplementedError("automatic sudo injection")
+         else:
+             raise
+  ```
 
 --
 
 - Wow. That sucks.
+
+--
+
+  .center[<img src="rage.png" width="200">]
 
 ---
 
@@ -366,13 +370,13 @@ def mycopy(source, dest):
 
 - You can just do
 
-```py
-def mycopy(source, dest):
-   try:
-       shutil.copy2(source, dest)
-   except PermissionError:
-       raise NotImplementedError("automatic sudo injection")
-```
+  ```py
+  def mycopy(source, dest):
+     try:
+         shutil.copy2(source, dest)
+     except PermissionError:
+         raise NotImplementedError("automatic sudo injection")
+  ```
 
 - (Don't worry, `PermissionError` subclasses from `OSError`. Old code will
   still work).
@@ -398,39 +402,36 @@ layout: true
 
 --
 
-```py
-def naivesum(N):
-    """
-    Naively sum the first N integers
-    """
-    A = 0
-    for i in range(N + 1):
-        A += i
-    return A
-```
+  ```py
+  def naivesum(N):
+      """
+      Naively sum the first N integers
+      """
+      A = 0
+      for i in range(N + 1):
+          A += i
+      return A
+  ```
 --
 
-```py
-In [3]: timeit naivesum(1000000)
-10 loops, best of 3: 61.4 ms per loop
-```
-
+  ```py
+  In [3]: timeit naivesum(1000000)
+  10 loops, best of 3: 61.4 ms per loop
+  ```
 --
 
-```py
-In [4]: timeit naivesum(10000000)
-1 loops, best of 3: 622 ms per loop
-```
-
+  ```py
+  In [4]: timeit naivesum(10000000)
+  1 loops, best of 3: 622 ms per loop
+  ```
 --
 
-```py
-In [5]: timeit naivesum(100000000)
-```
-
+  ```py
+  In [5]: timeit naivesum(100000000)
+  ```
 --
 
-<img src="startupdisk.png" width="500">
+  .center[<img src="startupdisk.png" width="500">]
 
 ---
 
