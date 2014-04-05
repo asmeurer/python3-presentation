@@ -329,6 +329,56 @@ NotImplementedError
 
 ---
 
+layout: true
+
+# Feature 4: Fine grained OSError subclasses
+
+---
+
+- The code I just showed you is wrong.
+
+- It catches OSError an assumes it is a permission error.
+
+- But OSError can be a lot of things (file not found, is a directory, is not a
+  directory, broken pipe, ...)
+
+- You really have to do
+
+```py
+import errno
+def mycopy(source, dest):
+   try:
+       shutil.copy2(source, dest)
+   except (OSError, IOError) as e:
+       if e.errno in [errno.EPERM, errno.EACCES]:
+           raise NotImplementedError("automatic sudo injection")
+       else:
+           raise
+```
+
+--
+
+- Wow. That sucks.
+
+---
+
+- Python 3 fixes this by adding a ton of [new exceptions](https://docs.python.org/3.4/library/exceptions.html#os-exceptions).
+
+- You can just do
+
+```py
+def mycopy(source, dest):
+   try:
+       shutil.copy2(source, dest)
+   except PermissionError:
+       raise NotImplementedError("automatic sudo injection")
+```
+
+- (Don't worry, `PermissionError` subclasses from `OSError`. Old code will
+  still work).
+
+---
+
     </textarea>
     <script src="http://gnab.github.io/remark/downloads/remark-0.6.2.min.js" type="text/javascript">
     </script>
