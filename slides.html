@@ -12,19 +12,76 @@
 
 class: center, middle
 
-# Title
+# 10 awesome features of Python that you can't use because you refuse to upgrade to Python 3
 
 ---
 
-# Agenda
+class: center, middle
 
-1. Introduction
-2. Deep-dive
-3. ...
+# 10 awesome features of Python that you can't use because you refuse to upgrade to Python 3
+
+# or
+
+# Turning it up to 11!
 
 ---
 
-# Introduction
+class: center, middle
+
+# 10 awesome features of Python that you can't use because you refuse to upgrade to Python 3
+
+# or
+
+# Turning it up to 11!
+
+![](eleven-11.jpg)
+
+---
+
+# Feature 1: Advanced unpacking
+
+```py
+>>> a, b, *rest = range(10)
+>>> a
+0
+>>> b
+1
+>>> rest
+[2, 3, 4, 5, 6, 7, 8, 9]
+```
+
+---
+
+# Feature 1: Advanced unpacking
+
+`*rest` can go anywhere:
+
+```py
+>>> a, *rest, b = range(10)
+>>> a
+0
+>>> b
+9
+>>> rest
+[1, 2, 3, 4, 5, 6, 7, 8]
+```
+
+```py
+>>> *rest, b = range(10)
+>> rest
+[0, 1, 2, 3, 4, 5, 6, 7, 8]
+>>> b
+9
+```
+
+---
+
+# Feature 2: Keyword only arguments
+
+---
+
+# Feature 3: Chained exceptions
+
 
     </textarea>
     <script src="http://gnab.github.io/remark/downloads/remark-0.6.2.min.js" type="text/javascript">
