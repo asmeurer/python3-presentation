@@ -202,6 +202,43 @@ Or if you prefer, `extendto(10, longer=b, shorter=a)`.
 
 ---
 
+# Add new keyword arguments without breaking API.
+
+- Python 3 did this in the standard library.
+
+--
+
+- For example, functions in `os` have `follow_symlinks` option.
+
+--
+
+- So you can just use `os.stat(file, follow_symlinks=False)` instead of `os.lstat`.
+
+--
+
+- Lets you do
+
+  ```py
+  s = os.stat(file, follow_symlinks=some_condition)
+  ```
+
+  instead of
+
+  ```py
+  if some_condition:
+      s = os.stat(file)
+  else:
+      s = os.lstat(file)
+  ```
+
+--
+
+- But `os.stat(file, some_condition)` doesn't work.
+
+- Keeps you from thinking it's a two-argument function.
+
+---
+
 - In Python 2, you have to use `**kwargs` and do the handling yourself.
 
 --
