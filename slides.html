@@ -465,24 +465,28 @@ layout: true
 - In Python 2, you can do
 
   ```py
-  >>> sorted(['1', 2, 3])
-  [2, 3, '1']
+  >>> max(['one', 2]) # One *is* the lonliest number
+  'one'
   ```
 
 --
 
 - Hurray. I just disproved math!
 
---
+  ![](disprovemath.jpg)
+
+---
 
 - It's because in Python 2, you can `<` compare anything to anything.
 
   ```py
-  >>> 'one' > 2 # One *is* the lonliest number
+  >>> 'abc' > 123
+  True
+  >>> 42 > None
   True
   ```
 
----
+--
 
 - In Python 3, you can't do this:
 
