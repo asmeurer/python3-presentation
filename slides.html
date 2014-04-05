@@ -57,25 +57,25 @@ layout: true
 
 --
 
-`*rest` can go anywhere:
+- `*rest` can go anywhere:
 
-```py
->>> a, *rest, b = range(10)
->>> a
-0
->>> b
-9
->>> rest
-[1, 2, 3, 4, 5, 6, 7, 8]
-```
+  ```py
+  >>> a, *rest, b = range(10)
+  >>> a
+  0
+  >>> b
+  9
+  >>> rest
+  [1, 2, 3, 4, 5, 6, 7, 8]
+  ```
 
-```py
->>> *rest, b = range(10)
->> rest
-[0, 1, 2, 3, 4, 5, 6, 7, 8]
->>> b
-9
-```
+  ```py
+  >>> *rest, b = range(10)
+  >> rest
+  [0, 1, 2, 3, 4, 5, 6, 7, 8]
+  >>> b
+  9
+  ```
 
 ---
 
@@ -120,89 +120,166 @@ def f(a, b, *args, option=True):
 
 --
 
-`option` comes *after* `*args`.
+- `option` comes *after* `*args`.
 
 --
 
-The only way to access it is to explicitly call `f(a, b, option=True)`
+- The only way to access it is to explicitly call `f(a, b, option=True)`
+
+--
+
+- You can write just a `*` if you don't want to collect `*args`.
+
+  ```py
+  def f(a, b, *, option=True):
+      ...
+  ```
+
 
 ---
 
-No more, "Oops, I accidentally passed too many arguments to the function, and
+- No more, "Oops, I accidentally passed too many arguments to the function, and
 one of them was swalled by a keyword argument".
 
-```py
-def sum(a, b, biteme=False):
-    if biteme:
-        shutil.rmtree('/')
-    else:
-        return a + b
-```
+  ```py
+  def sum(a, b, biteme=False):
+      if biteme:
+          shutil.rmtree('/')
+      else:
+          return a + b
+  ```
 
-```
->>> sum(1, 2)
-3
->>> sum(1, 2, 3)
-<disaster>
-```
-
----
-
-Or, "I reordered the keyword arguments of a function, but something was
-implicitly passing in arguments expecting the order"
-
-Stupid example:
-
-```py
-def extendto(value, shorter, longer):
-    """
-    Extend list `shorter` to the length of list `longer` with `value`
-    """
-    if len(shorter) > len(longer):
-        raise ValueError('The `shorter` list is longer than the `longer` list')
-    a.extend([value]*(len(longer) - len(shorter)))
-```
-
-```py
->>> a = [1, 2]
->>> b = [1, 2, 3, 4, 5]
->>> extendto(10, a, b)
->>> a
-[1, 2, 10, 10, 10]
-```
+  ```py
+  >>> sum(1, 2)
+  3
+  >>> sum(1, 2, 3)
+  <disaster>
+  ```
 
 --
 
-Hmm, maybe it makes more sense for `longer` to come before `shorter`...
+- Instead write
 
-Too bad, you'll break the code.
+  ```py
+  def sum(a, b, *, biteme=False):
+      if biteme:
+          shutil.rmtree('/')
+      else:
+          return a + b
+  ```
 
 ---
 
-You can use
+- Or, "I reordered the keyword arguments of a function, but something was
+implicitly passing in arguments expecting the order"
 
-```py
-def extendto(value, *, shorter=None, longer=None):
-    """
-    Extend list `shorter` to the length of list `longer` with `value`
-    """
-    if shorter is None or longer is None:
-        raise TypeError('`shorter` and `longer` must be specified')
-    if len(shorter) > len(longer):
-        raise ValueError('The `shorter` list is longer than the `longer` list')
-    a.extend([value]*(len(longer) - len(shorter)))
-```
+- Example:
 
-Now, `a` and `b` *have* to be passed in as `extendto(10, shorter=a,
+ ```py
+  def maxall(iterable, key=None):
+      """
+      A list of all max items from the iterable
+      """
+      key = key or (lambda x: x)
+      m = max(iterable, key=key)
+      return [i for i in iterable if key(i) == key(m)]
+  ```
+
+  ```py
+  >>> maxall(['a', 'ab', 'bc'], len)
+  ['ab', 'bc']
+  ```
+
+---
+
+- The `max` builtin supports `max(a, b, c)`. We should allow that too.
+
+  ```py
+  def maxall(*args, key=None):
+      """
+      A list of all max items from the iterable
+      """
+      if len(args) == 1:
+          iterable = args[0]
+      else:
+          iterable = args
+      key = key or (lambda x: x)
+      m = max(iterable, key=key)
+      return [i for i in iterable if key(i) == key(m)]
+  ```
+
+- We just broke any code that passed in the key as a second argument without
+  using the keyword.
+
+  ```py
+  >>> maxall(['a', 'ab', 'ac'], len)
+  Traceback (most recent call last):
+    File "<stdin>", line 1, in <module>
+    File "<stdin>", line 10, in maxall
+  TypeError: unorderable types: builtin_function_or_method() > list()
+  ```
+
+- (Actually in Python 2 it would just return `['a', 'ab', 'ac']`, see feature 6).
+
+- By the way, `max` shows that this is already possible in Python 2, but only
+  if you write your function in C.
+
+---
+
+- You can make your APIs "future change proof".
+
+- Stupid example:
+
+  ```py
+  def extendto(value, shorter, longer):
+      """
+      Extend list `shorter` to the length of list `longer` with `value`
+      """
+      if len(shorter) > len(longer):
+          raise ValueError('The `shorter` list is longer than the `longer` list')
+      a.extend([value]*(len(longer) - len(shorter)))
+  ```
+
+  ```py
+  >>> a = [1, 2]
+  >>> b = [1, 2, 3, 4, 5]
+  >>> extendto(10, a, b)
+  >>> a
+  [1, 2, 10, 10, 10]
+  ```
+
+--
+
+- Hmm, maybe it makes more sense for `longer` to come before `shorter`...
+
+- Too bad, you'll break the code.
+
+---
+
+- In Python 3, you can use
+
+  ```py
+  def extendto(value, *, shorter=None, longer=None):
+      """
+      Extend list `shorter` to the length of list `longer` with `value`
+      """
+      if shorter is None or longer is None:
+          raise TypeError('`shorter` and `longer` must be specified')
+      if len(shorter) > len(longer):
+          raise ValueError('The `shorter` list is longer than the `longer` list')
+      a.extend([value]*(len(longer) - len(shorter)))
+  ```
+
+- Now, `a` and `b` *have* to be passed in as `extendto(10, shorter=a,
 longer=b)`.
 
 --
 
-Or if you prefer, `extendto(10, longer=b, shorter=a)`.
+- Or if you prefer, `extendto(10, longer=b, shorter=a)`.
 
 ---
 
-# Add new keyword arguments without breaking API.
+- Add new keyword arguments without breaking API.
 
 - Python 3 did this in the standard library.
 
@@ -257,75 +334,72 @@ layout: true
 
 ---
 
-**Situation:** you catch an exception with `except` do something, and then raise a
+- **Situation:** you catch an exception with `except` do something, and then raise a
 different exception.
 
-```py
-def mycopy(source, dest):
-   try:
-       shutil.copy2(source, dest)
-   except OSError: # We don't have permissions. More on this later
-       raise NotImplementedError("automatic sudo injection")
-```
+  ```py
+  def mycopy(source, dest):
+     try:
+         shutil.copy2(source, dest)
+     except OSError: # We don't have permissions. More on this later
+         raise NotImplementedError("automatic sudo injection")
+  ```
 
-**Problem:** You lose the original traceback
+- **Problem:** You lose the original traceback
 
-```py
->>> mycopy('noway', 'noway2')
->>> mycopy(1, 2)
-Traceback (most recent call last):
-  File "<stdin>", line 1, in <module>
-  File "<stdin>", line 5, in mycopy
-NotImplementedError: automatic sudo injection
-```
+  ```py
+  >>> mycopy('noway', 'noway2')
+  >>> mycopy(1, 2)
+  Traceback (most recent call last):
+    File "<stdin>", line 1, in <module>
+    File "<stdin>", line 5, in mycopy
+  NotImplementedError: automatic sudo injection
+  ```
 
 --
 
-What happened with the `OSError`?
+- What happened with the `OSError`?
 
 ---
 
-Python 3 shows you the whole chain of exceptions:
+- Python 3 shows you the whole chain of exceptions:
 
+  ```py
+  mycopy('noway', 'noway2')
+  Traceback (most recent call last):
+    File "<stdin>", line 3, in mycopy
+    File "/Users/aaronmeurer/anaconda3/lib/python3.3/shutil.py", line 243, in copy2
+      copyfile(src, dst, follow_symlinks=follow_symlinks)
+    File "/Users/aaronmeurer/anaconda3/lib/python3.3/shutil.py", line 109, in copyfile
+      with open(src, 'rb') as fsrc:
+  PermissionError: [Errno 13] Permission denied: 'noway'
 
-```py
-mycopy('noway', 'noway2')
-Traceback (most recent call last):
-  File "<stdin>", line 3, in mycopy
-  File "/Users/aaronmeurer/anaconda3/lib/python3.3/shutil.py", line 243, in copy2
-    copyfile(src, dst, follow_symlinks=follow_symlinks)
-  File "/Users/aaronmeurer/anaconda3/lib/python3.3/shutil.py", line 109, in copyfile
-    with open(src, 'rb') as fsrc:
-PermissionError: [Errno 13] Permission denied: 'noway'
+  During handling of the above exception, another exception occurred:
 
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
-  File "<stdin>", line 1, in <module>
-  File "<stdin>", line 5, in mycopy
-NotImplementedError: automatic sudo injection
-```
-
---
-
-You can also do this manually using `raise from`
-
-```py
-raise exception from e
-```
+  Traceback (most recent call last):
+    File "<stdin>", line 1, in <module>
+    File "<stdin>", line 5, in mycopy
+  NotImplementedError: automatic sudo injection
+  ```
 
 --
 
-```py
->>> raise NotImplementedError from OSError
-OSError
+- You can also do this manually using `raise from`
 
-The above exception was the direct cause of the following exception:
+  ```py
+  raise exception from e
+  ```
 
-Traceback (most recent call last):
-  File "<stdin>", line 1, in <module>
-NotImplementedError
-```
+  ```py
+  >>> raise NotImplementedError from OSError
+  OSError
+
+  The above exception was the direct cause of the following exception:
+
+  Traceback (most recent call last):
+    File "<stdin>", line 1, in <module>
+  NotImplementedError
+  ```
 
 ---
 
@@ -483,8 +557,8 @@ layout: true
   ```py
   >>> 'abc' > 123
   True
-  >>> 42 > None
-  True
+  >>> None > all
+  False
   ```
 
 --
