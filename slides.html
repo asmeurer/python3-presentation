@@ -665,10 +665,19 @@ All images have been blatenly stolen from the internet.
 
 
     </textarea>
-    <script src="http://gnab.github.io/remark/downloads/remark-0.6.2.min.js" type="text/javascript">
+    <script src="http://gnab.github.io/remark/downloads/remark-0.6.3.min.js" type="text/javascript">
     </script>
     <script type="text/javascript">
-      var slideshow = remark.create();
+      var slideshow = remark.create(      {
+        // Navigation options
+        navigation: {
+          // Enable or disable navigating using scroll
+          // Default: true
+          // Alternatives: false
+          scroll: false,
+        }
+      }
+      );
     </script>
   </body>
 </html>
