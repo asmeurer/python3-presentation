@@ -661,6 +661,132 @@ In case you don't know, generators are awesome because:
 
 ---
 
+layout: true
+
+# Feature 8: asyncio
+
+---
+
+Add content here
+
+---
+
+layout: true
+
+# Feature 9: Standard library additions
+
+---
+
+## `faulthandler`
+
+- Display (limited) tracebacks, even when Python dies the hard way.
+
+- Won't work with `kill -9`, but does work with, e.g., segfaults.
+
+  ```py
+  import faulthandler
+  faulthandler.enable()
+
+  def killme():
+      # Taken from http://nbviewer.ipython.org/github/ipython/ipython/blob/1.x/examples/notebooks/Part%201%20-%20Running%20Code.ipynb
+      import sys
+      from ctypes import CDLL
+      # This will crash a Linux or Mac system; equivalent calls can be made on
+      # Windows
+      dll = 'dylib' if sys.platform == 'darwin' else 'so.6'
+      libc = CDLL("libc.%s" % dll)
+      libc.time(-1)  # BOOM!!
+
+  killme()
+  ```
+
+  ```bash
+  $python test.py
+  Fatal Python error: Segmentation fault
+
+  Current thread 0x00007fff781b6310:
+    File "test.py", line 11 in killme
+    File "test.py", line 13 in <module>
+  Segmentation fault: 11
+  ```
+
+- Or `kill -6` (`SIGABRT`)
+
+- Can also enable with `python -X faulthandler`
+
+---
+
+## `ipaddress`
+
+- Exactly that. IP addresses.
+
+  ```py
+  >>> ipaddress.ip_address('192.168.0.1')
+  IPv4Address('192.168.0.1')
+  >>> ipaddress.ip_address('2001:db8::')
+  IPv6Address('2001:db8::')
+  ```
+
+- Just another thing you don't want to roll yourself.
+
+---
+
+## `functools.lru_cache`
+
+- A LRU cache decorator for your functions.
+
+- From [docs](https://docs.python.org/3/whatsnew/3.2.html#functools).
+
+  ```py
+  @lru_cache(maxsize=32)
+  def get_pep(num):
+      'Retrieve text of a Python Enhancement Proposal'
+      resource = 'http://www.python.org/dev/peps/pep-%04d/' % num
+      try:
+          with urllib.request.urlopen(resource) as s:
+              return s.read()
+      except urllib.error.HTTPError:
+          return 'Not Found'
+
+  >>> for n in 8, 290, 308, 320, 8, 218, 320, 279, 289, 320, 9991:
+  ...     pep = get_pep(n)
+  ...     print(n, len(pep))
+
+  >>> get_pep.cache_info()
+  CacheInfo(hits=3, misses=8, maxsize=32, currsize=8)
+  ```
+
+---
+
+## `enum`
+
+- Finally, an enumerated type in the standard library.
+
+- Python 3.4 only.
+
+  ```py
+  >>> from enum import Enum
+  >>> class Color(Enum):
+  ...     red = 1
+  ...     green = 2
+  ...     blue = 3
+  ...
+  ```
+
+- Uses some magic that is only possible in Python 3 (due to metaclass
+  changes):
+
+  ```py
+  >>> class Shape(Enum):
+  ...     square = 2
+  ...     square = 3
+  ...
+  Traceback (most recent call last):
+  ...
+  TypeError: Attempted to reuse key: 'square'
+  ```
+
+---
 
 layout: true
 
