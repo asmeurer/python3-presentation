@@ -587,6 +587,83 @@ layout: true
 
 layout: true
 
+# Feature 7: yield from
+
+---
+
+- Pretty great if you use generators
+
+- Instead of writing
+
+  ```py
+  for i in gen():
+      yield i
+  ```
+
+  Just write
+
+  ```py
+  yield from gen()
+  ```
+
+- Easily refactor generators into subgenerators.
+
+---
+
+- Makes it easier to turn everything into a generator. See "Feature 5:
+  Everything is an iterator" above for why you should do this.
+
+- Instead of accumulating a list, just `yield` or `yield from`.
+
+- **Bad**
+
+  ```py
+  def dup(n):
+      A = []
+      for i in range(n):
+          A.extend([i, i])
+      return A
+  ```
+
+  **Good**
+
+  ```py
+  def dup(n):
+      for i in range(n):
+          yield i
+          yield i
+  ```
+
+  **Better**
+
+  ```py
+  def dup(n):
+      for i in range(n):
+          yield from [i, i]
+  ```
+
+---
+
+In case you don't know, generators are awesome because:
+
+- Only one value is computed at a time. Low memory impact (see `range` example
+  above).
+
+- Can break in the middle. Don't have to compute everything just to find out
+  you needed none of it. Compute just what you need. If you often *don't* need
+  it all, you can gain a lot of performance here.
+
+- If you need a list (e.g., for slicing), just call `list()` on the generator.
+
+- Function state is "saved" between yields.
+
+- This leads to interesting possibilities, a. la. coroutines...
+
+---
+
+
+layout: true
+
 # Feature 10: Fun
 
 ---
