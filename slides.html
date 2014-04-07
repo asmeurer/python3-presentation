@@ -675,6 +675,8 @@ layout: true
 >>> π = math.pi
 ```
 
+--
+
 - Sorry, letter-like characters only.
 
 - `🍺 = "beer"` does not work.
@@ -687,6 +689,8 @@ layout: true
 def f(a: stuff, b: stuff = 2) -> result:
     ...
 ```
+
+- Annotations can be arbitrary Python objects.
 
 - Python doesn't do anything with the annotations other than put them in an
   `__annotations__` dictionary.
