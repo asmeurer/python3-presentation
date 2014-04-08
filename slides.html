@@ -40,6 +40,38 @@ class: center, middle
 
 layout: true
 
+# Feature 0: Matrix Multiplication
+
+---
+
+- (feature 0 because you can't actually use it yet)
+
+- [PEP 465](http://legacy.python.org/dev/peps/pep-0465/)
+
+- In Python 3.5, you'll be able to replace
+
+  ```py
+  >>> a = np.array([[1, 0], [0, 1]])
+  >>> b = np.array([[4, 1], [2, 2]])
+  >>> np.dot(a, b)
+  array([[4, 1],
+         [2, 2]])
+  ```
+
+  with
+
+  ```py
+  >>> a = [[1, 0], [0, 1]]
+  >>> b = [[4, 1], [2, 2]]
+  >>> a @ b
+  array([[4, 1],
+       [2, 2]])
+  ```
+
+---
+
+layout: true
+
 # Feature 1: Advanced unpacking
 
 ---
@@ -697,7 +729,6 @@ layout: true
 - It's OK, though. Even David Beazley had a hard time with it:
 
 <img src="dabeaz.png" width="500">
-
 
 ---
 
