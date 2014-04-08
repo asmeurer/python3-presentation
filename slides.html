@@ -226,6 +226,13 @@ one of them was swalled by a keyword argument".
           return a + b
   ```
 
+  ```py
+  >>> sum(1, 2, 3)
+  Traceback (most recent call last):
+    File "<stdin>", line 1, in <module>
+  TypeError: sum() takes 2 positional arguments but 3 were given
+  ```
+
 ---
 
 - Or, "I reordered the keyword arguments of a function, but something was
