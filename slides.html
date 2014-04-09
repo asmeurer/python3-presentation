@@ -309,6 +309,9 @@ implicitly passing in arguments expecting the order"
 - By the way, `max` shows that this is already possible in Python 2, but only
   if you write your function in C.
 
+- Obviously, we should have used `maxall(iterable, *, key=None)` to begin
+  with.
+
 ---
 
 - You can make your APIs "future change proof".
@@ -378,7 +381,7 @@ longer=b)`.
 
 --
 
-- Lets you do
+- In case that sounds more verbose, it lets you do
 
   ```py
   s = os.stat(file, follow_symlinks=some_condition)
@@ -410,6 +413,12 @@ longer=b)`.
 --
 
 - No longer self documenting.
+
+--
+
+- If you somehow are writing for a Python 3 only codebase, I highly recommend
+ making all your keyword arguments keyword only, especially keyword arguments
+ that represent "options".
 
 ---
 
