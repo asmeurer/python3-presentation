@@ -254,25 +254,26 @@ one of them was swalled by a keyword argument".
 
 ---
 
+
 - Or, "I reordered the keyword arguments of a function, but something was
 implicitly passing in arguments expecting the order"
 
 - Example:
 
- ```py
-  def maxall(iterable, key=None):
-      """
-      A list of all max items from the iterable
-      """
-      key = key or (lambda x: x)
-      m = max(iterable, key=key)
-      return [i for i in iterable if key(i) == key(m)]
-  ```
-
   ```py
-  >>> maxall(['a', 'ab', 'bc'], len)
-  ['ab', 'bc']
-  ```
+   def maxall(iterable, key=None):
+       """
+       A list of all max items from the iterable
+       """
+       key = key or (lambda x: x)
+       m = max(iterable, key=key)
+       return [i for i in iterable if key(i) == key(m)]
+   ```
+
+   ```py
+   >>> maxall(['a', 'ab', 'bc'], len)
+   ['ab', 'bc']
+   ```
 
 ---
 
