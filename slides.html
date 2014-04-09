@@ -428,8 +428,8 @@ layout: true
 
 ---
 
-- **Situation:** you catch an exception with `except` do something, and then raise a
-different exception.
+- **Situation:** you catch an exception with `except`, do something, and then
+raise a different exception.
 
   ```py
   def mycopy(source, dest):
@@ -499,15 +499,15 @@ different exception.
 
 layout: true
 
-# Feature 4: Fine grained OSError subclasses
+# Feature 4: Fine grained `OSError` subclasses
 
 ---
 
 - The code I just showed you is wrong.
 
-- It catches OSError an assumes it is a permission error.
+- It catches `OSError` and assumes it is a permission error.
 
-- But OSError can be a lot of things (file not found, is a directory, is not a
+- But `OSError` can be a lot of things (file not found, is a directory, is not a
   directory, broken pipe, ...)
 
 - You really have to do
