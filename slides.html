@@ -546,8 +546,8 @@ layout: true
          raise NotImplementedError("automatic sudo injection")
   ```
 
-- (Don't worry, `PermissionError` subclasses from `OSError`. Old code will
-  still work).
+- (Don't worry, `PermissionError` subclasses from `OSError` and still has
+  `.errno`. Old code will still work).
 
 ---
 
