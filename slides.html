@@ -98,38 +98,51 @@ layout: true
 
 ---
 
+- You can already do this:
 
-```py
->>> a, b, *rest = range(10)
->>> a
-0
->>> b
-1
->>> rest
-[2, 3, 4, 5, 6, 7, 8, 9]
-```
+  ```py
+  >>> a, b = range(2)
+  >>> a
+  0
+  >>> b
+  1
+  ```
+
+--
+
+- Now you can do this:
+
+  ```py
+  >>> a, b, *rest = range(10)
+  >>> a
+  0
+  >>> b
+  1
+  >>> rest
+  [2, 3, 4, 5, 6, 7, 8, 9]
+  ```
 
 --
 
 - `*rest` can go anywhere:
 
-```py
->>> a, *rest, b = range(10)
->>> a
-0
->>> b
-9
->>> rest
-[1, 2, 3, 4, 5, 6, 7, 8]
-```
+  ```py
+  >>> a, *rest, b = range(10)
+  >>> a
+  0
+  >>> b
+  9
+  >>> rest
+  [1, 2, 3, 4, 5, 6, 7, 8]
+  ```
 
-```py
->>> *rest, b = range(10)
->> rest
-[0, 1, 2, 3, 4, 5, 6, 7, 8]
->>> b
-9
-```
+  ```py
+  >>> *rest, b = range(10)
+  >> rest
+  [0, 1, 2, 3, 4, 5, 6, 7, 8]
+  >>> b
+  9
+  ```
 
 ---
 
