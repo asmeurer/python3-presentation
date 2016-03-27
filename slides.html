@@ -59,41 +59,6 @@ or set literals, `__future__.print_function`)
 
 ---
 
-
-layout: true
-
-# Feature 0: Matrix Multiplication
-
----
-
-- (feature 0 because you can't actually use it yet)
-
-- [PEP 465](http://legacy.python.org/dev/peps/pep-0465/)
-
-- In Python 3.5, you'll be able to replace
-
-  ```py
-  >>> a = np.array([[1, 0], [0, 1]])
-  >>> b = np.array([[4, 1], [2, 2]])
-  >>> np.dot(a, b)
-  array([[4, 1],
-         [2, 2]])
-  ```
-
-  with
-
-  ```py
-  >>> a = np.array([[1, 0], [0, 1]])
-  >>> b = np.array([[4, 1], [2, 2]])
-  >>> a @ b
-  array([[4, 1],
-       [2, 2]])
-  ```
-
-- Any object can override `__matmul__` to use `@`.
-
----
-
 layout: true
 
 # Feature 1: Advanced unpacking
@@ -982,6 +947,36 @@ layout: true
 - `bytes` are bytes.
 
 - There is no `unicode`. `str` strings are Unicode.
+
+---
+
+layout: true
+
+# Feature 12: Matrix Multiplication
+
+---
+
+In Python 3.5, you are able to replace
+
+  ```py
+  >>> a = np.array([[1, 0], [0, 1]])
+  >>> b = np.array([[4, 1], [2, 2]])
+  >>> np.dot(a, b)
+  array([[4, 1],
+         [2, 2]])
+  ```
+
+  with
+
+  ```py
+  >>> a = np.array([[1, 0], [0, 1]])
+  >>> b = np.array([[4, 1], [2, 2]])
+  >>> a @ b
+  array([[4, 1],
+         [2, 2]])
+  ```
+
+- Any object can override `__matmul__` to use `@`.
 
 ---
 
