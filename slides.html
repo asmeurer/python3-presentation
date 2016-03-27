@@ -981,6 +981,37 @@ In Python 3.5, you are able to replace
 ---
 
 layout: true
+
+# Feature 13: Pathlib
+
+---
+
+- In Python 2, path handling is verbose
+
+  ```py
+  import os
+
+  directory = "/etc"
+  filepath = os.path.join(directory, "test_file.txt")
+
+  if os.path.exists(filepath):
+      stuff
+  ```
+
+- In Python 3, it is much more simpler
+
+  ```py
+  from pathlib import Path
+
+  directory = Path("/etc")
+  filepath = directory / "test_file.txt"
+
+  if filepath.exists():
+      stuff
+  ```
+---
+
+layout: true
 class: center, middle
 
 ---
