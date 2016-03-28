@@ -24,19 +24,7 @@ class: center, middle
 
 # or
 
-# Turning it up to 11!
-
----
-
-class: center, middle
-
-# 10 awesome features of Python that you can't use because you refuse to upgrade to Python 3
-
-# or
-
-# Turning it up to 11!
-
-![](eleven-11.jpg)
+# Turning it up to 13!
 
 ---
 
@@ -56,41 +44,6 @@ or set literals, `__future__.print_function`)
 - New syntax. New interpreter behavior. Standard library fixes.
 
 - And it's more than bytes/unicode...
-
----
-
-
-layout: true
-
-# Feature 0: Matrix Multiplication
-
----
-
-- (feature 0 because you can't actually use it yet)
-
-- [PEP 465](http://legacy.python.org/dev/peps/pep-0465/)
-
-- In Python 3.5, you'll be able to replace
-
-  ```py
-  >>> a = np.array([[1, 0], [0, 1]])
-  >>> b = np.array([[4, 1], [2, 2]])
-  >>> np.dot(a, b)
-  array([[4, 1],
-         [2, 2]])
-  ```
-
-  with
-
-  ```py
-  >>> a = np.array([[1, 0], [0, 1]])
-  >>> b = np.array([[4, 1], [2, 2]])
-  >>> a @ b
-  array([[4, 1],
-       [2, 2]])
-  ```
-
-- Any object can override `__matmul__` to use `@`.
 
 ---
 
@@ -986,6 +939,67 @@ layout: true
 ---
 
 layout: true
+
+# Feature 12: Matrix Multiplication
+
+---
+
+In Python 3.5, you are able to replace
+
+  ```py
+  >>> a = np.array([[1, 0], [0, 1]])
+  >>> b = np.array([[4, 1], [2, 2]])
+  >>> np.dot(a, b)
+  array([[4, 1],
+         [2, 2]])
+  ```
+
+  with
+
+  ```py
+  >>> a = np.array([[1, 0], [0, 1]])
+  >>> b = np.array([[4, 1], [2, 2]])
+  >>> a @ b
+  array([[4, 1],
+         [2, 2]])
+  ```
+
+- Any object can override `__matmul__` to use `@`.
+
+---
+
+layout: true
+
+# Feature 13: Pathlib
+
+---
+
+- In Python 2, path handling is verbose
+
+  ```py
+  import os
+
+  directory = "/etc"
+  filepath = os.path.join(directory, "test_file.txt")
+
+  if os.path.exists(filepath):
+      stuff
+  ```
+
+- In Python 3, it is much more simpler
+
+  ```py
+  from pathlib import Path
+
+  directory = Path("/etc")
+  filepath = directory / "test_file.txt"
+
+  if filepath.exists():
+      stuff
+  ```
+---
+
+layout: true
 class: center, middle
 
 ---
@@ -1007,6 +1021,9 @@ I am Aaron Meurer ([@asmeurer](https://github.com/asmeurer/)).
 I gave this presentation on April 9, 2014 at
 [APUG](http://www.meetup.com/austinpython/). If you are in Austin, TX and you
 enjoy Python, you should come to APUG!
+
+This presentation was updated by Jules David ([@galactics](https://github.com/galactics))
+on march 2016, to include some changes brought by Python 3.5.
 
 </textarea>
     <script src="https://gnab.github.io/remark/downloads/remark-0.6.3.min.js" type="text/javascript">
