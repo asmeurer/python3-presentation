@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Title</title>
+    <title>10 awesome features of Python that you can't use because you refuse to upgrade to Python 3</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <style type="text/css">
       /* Slideshow styles */
@@ -24,19 +24,7 @@ class: center, middle
 
 # or
 
-# Turning it up to 11!
-
----
-
-class: center, middle
-
-# 10 awesome features of Python that you can't use because you refuse to upgrade to Python 3
-
-# or
-
-# Turning it up to 11!
-
-![](eleven-11.jpg)
+# Turning it up to 13!
 
 ---
 
@@ -56,41 +44,6 @@ or set literals, `__future__.print_function`)
 - New syntax. New interpreter behavior. Standard library fixes.
 
 - And it's more than bytes/unicode...
-
----
-
-
-layout: true
-
-# Feature 0: Matrix Multiplication
-
----
-
-- (feature 0 because you can't actually use it yet)
-
-- [PEP 465](http://legacy.python.org/dev/peps/pep-0465/)
-
-- In Python 3.5, you'll be able to replace
-
-  ```py
-  >>> a = np.array([[1, 0], [0, 1]])
-  >>> b = np.array([[4, 1], [2, 2]])
-  >>> np.dot(a, b)
-  array([[4, 1],
-         [2, 2]])
-  ```
-
-  with
-
-  ```py
-  >>> a = np.array([[1, 0], [0, 1]])
-  >>> b = np.array([[4, 1], [2, 2]])
-  >>> a @ b
-  array([[4, 1],
-       [2, 2]])
-  ```
-
-- Any object can override `__matmul__` to use `@`.
 
 ---
 
@@ -140,7 +93,7 @@ layout: true
 
   ```py
   >>> *rest, b = range(10)
-  >> rest
+  >>> rest
   [0, 1, 2, 3, 4, 5, 6, 7, 8]
   >>> b
   9
@@ -208,7 +161,7 @@ def f(a, b, *args, option=True):
 ---
 
 - No more, "Oops, I accidentally passed too many arguments to the function, and
-one of them was swalled by a keyword argument".
+one of them was swallowed by a keyword argument".
 
   ```py
   def sum(a, b, biteme=False):
@@ -410,7 +363,7 @@ longer=b)`.
 
 --
 
-- Lot's of ugly `option = kwargs.pop(True)` at the top of your functions.
+- Lots of ugly `option = kwargs.pop(True)` at the top of your functions.
 
 --
 
@@ -612,7 +565,7 @@ layout: true
 - Instead write some variant (`xrange`, `itertools.izip`,
   `dict.itervalues`, ...).
 
-- Inconsistant API anyone?
+- Inconsistent API anyone?
 
 ---
 
@@ -636,7 +589,7 @@ layout: true
 - In Python 2, you can do
 
   ```py
-  >>> max(['one', 2]) # One *is* the lonliest number
+  >>> max(['one', 2]) # One *is* the loneliest number
   'one'
   ```
 
@@ -754,7 +707,7 @@ In case you don't know, generators are awesome because:
 
 - Function state is "saved" between yields.
 
-- This leads to interesting possibilities, a. la. coroutines...
+- This leads to interesting possibilities, à la coroutines...
 
 ---
 
@@ -764,7 +717,7 @@ layout: true
 
 ---
 
-- Uses new coroutines features and saved state of generators to do
+- Uses new coroutine features and saved state of generators to do
   asynchronous IO.
 
   ```py
@@ -957,7 +910,7 @@ def f(a: stuff, b: stuff = 2) -> result:
   {'return': <class 'float'>, 'x': <class 'int'>}
   ```
 
-- But it leaves open the possiblity for library authors to do fun things.
+- But it leaves open the possibility for library authors to do fun things.
 
 - Example, IPython 2.0 widgets.
 
@@ -986,6 +939,67 @@ layout: true
 ---
 
 layout: true
+
+# Feature 12: Matrix Multiplication
+
+---
+
+In Python 3.5, you are able to replace
+
+  ```py
+  >>> a = np.array([[1, 0], [0, 1]])
+  >>> b = np.array([[4, 1], [2, 2]])
+  >>> np.dot(a, b)
+  array([[4, 1],
+         [2, 2]])
+  ```
+
+  with
+
+  ```py
+  >>> a = np.array([[1, 0], [0, 1]])
+  >>> b = np.array([[4, 1], [2, 2]])
+  >>> a @ b
+  array([[4, 1],
+         [2, 2]])
+  ```
+
+- Any object can override `__matmul__` to use `@`.
+
+---
+
+layout: true
+
+# Feature 13: Pathlib
+
+---
+
+- In Python 2, path handling is verbose
+
+  ```py
+  import os
+
+  directory = "/etc"
+  filepath = os.path.join(directory, "test_file.txt")
+
+  if os.path.exists(filepath):
+      stuff
+  ```
+
+- In Python 3, it is much more simpler
+
+  ```py
+  from pathlib import Path
+
+  directory = Path("/etc")
+  filepath = directory / "test_file.txt"
+
+  if filepath.exists():
+      stuff
+  ```
+---
+
+layout: true
 class: center, middle
 
 ---
@@ -998,7 +1012,7 @@ class: center, middle
 
 Slides were made with http://remarkjs.com/
 
-All images have been blatenly stolen from the internet.
+All images have been blatantly stolen from the internet.
 
 Source for slides can be found at https://github.com/asmeurer/python3-presentation.
 
@@ -1007,6 +1021,9 @@ I am Aaron Meurer ([@asmeurer](https://github.com/asmeurer/)).
 I gave this presentation on April 9, 2014 at
 [APUG](http://www.meetup.com/austinpython/). If you are in Austin, TX and you
 enjoy Python, you should come to APUG!
+
+This presentation was updated by Jules David ([@galactics](https://github.com/galactics))
+on march 2016, to include some changes brought by Python 3.5.
 
 </textarea>
     <script src="https://cdn.rawgit.com/gnab/remark/gh-pages/downloads/remark-0.6.3.min.js" type="text/javascript">
