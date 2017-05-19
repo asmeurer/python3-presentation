@@ -154,7 +154,7 @@ def f(a, b, *args, option=True):
 
   ```py
   def f(a, b, *, option=True):
-      ...
+        ...
   ```
 
 
@@ -165,10 +165,10 @@ one of them was swallowed by a keyword argument".
 
   ```py
   def sum(a, b, biteme=False):
-      if biteme:
-          shutil.rmtree('/')
-      else:
-          return a + b
+        if biteme:
+            shutil.rmtree('/')
+        else:
+            return a + b
   ```
 
   ```py
@@ -190,10 +190,10 @@ one of them was swallowed by a keyword argument".
 
   ```py
   def sum(a, b, *, biteme=False):
-      if biteme:
-          shutil.rmtree('/')
-      else:
-          return a + b
+        if biteme:
+            shutil.rmtree('/')
+        else:
+            return a + b
   ```
 
   ```py
@@ -217,12 +217,12 @@ implicitly passing in arguments expecting the order"
 
   ```py
    def maxall(iterable, key=None):
-       """
-       A list of all max items from the iterable
-       """
-       key = key or (lambda x: x)
-       m = max(iterable, key=key)
-       return [i for i in iterable if key(i) == key(m)]
+        """
+        A list of all max items from the iterable
+        """
+        key = key or (lambda x: x)
+        m = max(iterable, key=key)
+        return [i for i in iterable if key(i) == key(m)]
    ```
 
    ```py
@@ -236,16 +236,16 @@ implicitly passing in arguments expecting the order"
 
   ```py
   def maxall(*args, key=None):
-      """
-      A list of all max items from the iterable
-      """
-      if len(args) == 1:
-          iterable = args[0]
-      else:
-          iterable = args
-      key = key or (lambda x: x)
-      m = max(iterable, key=key)
-      return [i for i in iterable if key(i) == key(m)]
+        """
+        A list of all max items from the iterable
+        """
+        if len(args) == 1:
+            iterable = args[0]
+        else:
+            iterable = args
+        key = key or (lambda x: x)
+        m = max(iterable, key=key)
+        return [i for i in iterable if key(i) == key(m)]
   ```
 
 - We just broke any code that passed in the key as a second argument without
@@ -275,12 +275,12 @@ implicitly passing in arguments expecting the order"
 
   ```py
   def extendto(value, shorter, longer):
-      """
-      Extend list `shorter` to the length of list `longer` with `value`
-      """
-      if len(shorter) > len(longer):
-          raise ValueError('The `shorter` list is longer than the `longer` list')
-      shorter.extend([value]*(len(longer) - len(shorter)))
+        """
+        Extend list `shorter` to the length of list `longer` with `value`
+        """
+        if len(shorter) > len(longer):
+            raise ValueError('The `shorter` list is longer than the `longer` list')
+        shorter.extend([value]*(len(longer) - len(shorter)))
   ```
 
   ```py
@@ -303,14 +303,14 @@ implicitly passing in arguments expecting the order"
 
   ```py
   def extendto(value, *, shorter=None, longer=None):
-      """
-      Extend list `shorter` to the length of list `longer` with `value`
-      """
-      if shorter is None or longer is None:
-          raise TypeError('`shorter` and `longer` must be specified')
-      if len(shorter) > len(longer):
-          raise ValueError('The `shorter` list is longer than the `longer` list')
-      a.extend([value]*(len(longer) - len(shorter)))
+        """
+        Extend list `shorter` to the length of list `longer` with `value`
+        """
+        if shorter is None or longer is None:
+            raise TypeError('`shorter` and `longer` must be specified')
+        if len(shorter) > len(longer):
+            raise ValueError('The `shorter` list is longer than the `longer` list')
+        shorter.extend([value]*(len(longer) - len(shorter)))
   ```
 
 - Now, `a` and `b` *have* to be passed in as `extendto(10, shorter=a,
@@ -346,9 +346,9 @@ longer=b)`.
 
   ```py
   if some_condition:
-      s = os.stat(file)
+        s = os.stat(file)
   else:
-      s = os.lstat(file)
+        s = os.lstat(file)
   ```
 
 --
@@ -388,10 +388,10 @@ raise a different exception.
 
   ```py
   def mycopy(source, dest):
-     try:
-         shutil.copy2(source, dest)
-     except OSError: # We don't have permissions. More on this later
-         raise NotImplementedError("automatic sudo injection")
+        try:
+            shutil.copy2(source, dest)
+        except OSError: # We don't have permissions. More on this later
+            raise NotImplementedError("automatic sudo injection")
   ```
 
 - **Problem:** You lose the original traceback
@@ -470,13 +470,13 @@ layout: true
   ```py
   import errno
   def mycopy(source, dest):
-      try:
-          shutil.copy2(source, dest)
-      except OSError as e:
-          if e.errno in [errno.EPERM, errno.EACCES]:
-              raise NotImplementedError("automatic sudo injection")
-          else:
-              raise
+        try:
+            shutil.copy2(source, dest)
+        except OSError as e:
+            if e.errno in [errno.EPERM, errno.EACCES]:
+                raise NotImplementedError("automatic sudo injection")
+            else:
+                raise
   ```
 
 --
@@ -495,10 +495,10 @@ layout: true
 
   ```py
   def mycopy(source, dest):
-     try:
-         shutil.copy2(source, dest)
-     except PermissionError:
-         raise NotImplementedError("automatic sudo injection")
+        try:
+            shutil.copy2(source, dest)
+        except PermissionError:
+            raise NotImplementedError("automatic sudo injection")
   ```
 
 - (Don't worry, `PermissionError` subclasses from `OSError` and still has
@@ -527,13 +527,13 @@ layout: true
 
   ```py
   def naivesum(N):
-      """
-      Naively sum the first N integers
-      """
-      A = 0
-      for i in range(N + 1):
-          A += i
-      return A
+        """
+        Naively sum the first N integers
+        """
+        A = 0
+        for i in range(N + 1):
+            A += i
+        return A
   ```
 --
 
@@ -647,7 +647,7 @@ layout: true
 
   ```py
   for i in gen():
-      yield i
+        yield i
   ```
 
   Just write
@@ -669,27 +669,27 @@ layout: true
 
   ```py
   def dup(n):
-      A = []
-      for i in range(n):
-          A.extend([i, i])
-      return A
+        A = []
+        for i in range(n):
+            A.extend([i, i])
+        return A
   ```
 
   **Good**
 
   ```py
   def dup(n):
-      for i in range(n):
-          yield i
-          yield i
+        for i in range(n):
+            yield i
+            yield i
   ```
 
   **Better**
 
   ```py
   def dup(n):
-      for i in range(n):
-          yield from [i, i]
+        for i in range(n):
+            yield from [i, i]
   ```
 
 ---
@@ -725,17 +725,17 @@ layout: true
   # van Rossum, at LinkedIn, Mountain View, Jan 23, 2014
   @coroutine
   def fetch(host, port):
-      r,w = yield from open_connection(host,port)
-      w.write(b'GET /HTTP/1.0\r\n\r\n ')
-      while (yield from r.readline()).decode('latin-1').strip():
-          pass
-      body=yield from r.read()
-      return body
+        r,w = yield from open_connection(host,port)
+        w.write(b'GET /HTTP/1.0\r\n\r\n ')
+        while (yield from r.readline()).decode('latin-1').strip():
+            pass
+        body=yield from r.read()
+        return body
 
   @coroutine
   def start():
-      data = yield from fetch('python.org', 80)
-      print(data.decode('utf-8'))
+        data = yield from fetch('python.org', 80)
+        print(data.decode('utf-8'))
   ```
 
 
@@ -769,14 +769,14 @@ layout: true
   faulthandler.enable()
 
   def killme():
-      # Taken from http://nbviewer.ipython.org/github/ipython/ipython/blob/1.x/examples/notebooks/Part%201%20-%20Running%20Code.ipynb
-      import sys
-      from ctypes import CDLL
-      # This will crash a Linux or Mac system; equivalent calls can be made on
-      # Windows
-      dll = 'dylib' if sys.platform == 'darwin' else 'so.6'
-      libc = CDLL("libc.%s" % dll)
-      libc.time(-1)  # BOOM!!
+        # Taken from http://nbviewer.ipython.org/github/ipython/ipython/blob/1.x/examples/notebooks/Part%201%20-%20Running%20Code.ipynb
+        import sys
+        from ctypes import CDLL
+        # This will crash a Linux or Mac system; equivalent calls can be made on
+        # Windows
+        dll = 'dylib' if sys.platform == 'darwin' else 'so.6'
+        libc = CDLL("libc.%s" % dll)
+        libc.time(-1)  # BOOM!!
 
   killme()
   ```
@@ -821,13 +821,13 @@ layout: true
   ```py
   @lru_cache(maxsize=32)
   def get_pep(num):
-      'Retrieve text of a Python Enhancement Proposal'
-      resource = 'http://www.python.org/dev/peps/pep-%04d/' % num
-      try:
-          with urllib.request.urlopen(resource) as s:
-              return s.read()
-      except urllib.error.HTTPError:
-          return 'Not Found'
+        'Retrieve text of a Python Enhancement Proposal'
+        resource = 'http://www.python.org/dev/peps/pep-%04d/' % num
+        try:
+            with urllib.request.urlopen(resource) as s:
+                return s.read()
+        except urllib.error.HTTPError:
+            return 'Not Found'
 
   >>> for n in 8, 290, 308, 320, 8, 218, 320, 279, 289, 320, 9991:
   ...     pep = get_pep(n)
@@ -983,7 +983,7 @@ layout: true
   filepath = os.path.join(directory, "test_file.txt")
 
   if os.path.exists(filepath):
-      stuff
+        stuff
   ```
 
 - In Python 3, it is much more simpler
@@ -995,7 +995,7 @@ layout: true
   filepath = directory / "test_file.txt"
 
   if filepath.exists():
-      stuff
+        stuff
   ```
 ---
 
