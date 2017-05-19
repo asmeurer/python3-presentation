@@ -280,7 +280,7 @@ implicitly passing in arguments expecting the order"
       """
       if len(shorter) > len(longer):
           raise ValueError('The `shorter` list is longer than the `longer` list')
-      a.extend([value]*(len(longer) - len(shorter)))
+      shorter.extend([value]*(len(longer) - len(shorter)))
   ```
 
   ```py
