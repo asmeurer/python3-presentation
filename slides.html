@@ -688,7 +688,7 @@ In case you don't know, generators are awesome because:
   you needed none of it. Compute just what you need. If you often *don't* need
   it all, you can gain a lot of performance here.
 
-- If you need a list (e.g., for slicing), just call `list()` on the generator.
+- If you need a list, just call `list()` on the generator iterator. If you need slicing, use the efficient `itertools.islice()`.
 
 - Function state is "saved" between yields.
 
